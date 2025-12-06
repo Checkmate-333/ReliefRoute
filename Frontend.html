@@ -1,1 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ReliefRail – Transparent Disaster Relief Tracking on Blockchain</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="ReliefRail – Track every aid packet like a Speed Post using blockchain-based transparent disaster relief tracking."
+  />
 
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-alt: #070b1f;
+      --card: #0b1024;
+      --accent: #4f46e5;
+      --accent-soft: rgba(79, 70, 229, 0.18);
+      --accent-strong: #f97316;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: rgba(148, 163, 184, 0.3);
+      --danger: #ef4444;
+      --success: #22c55e;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.65);
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --nav-h: 70px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #111827 0, #020617 55%);
+      color: var(--text);
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Layout */
+
+    .page {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 5% 0, rgba(79, 70, 229, 0.15), transparent 60%),
+        radial-gradient(circle at 95% 0, rgba(236, 72, 153, 0.12), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(56, 189, 248, 0.10), transparent 55%),
+        linear-gradient(to bottom, #020617, #020617);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Navbar */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to bottom, rgba(2, 6, 23, 0.93), rgba(2, 6, 23, 0.75));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    .navbar-inner {
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 30%;
+      background: conic-gradient(from 180deg, #4f46e5, #22c55e, #ec4899, #4f46e5);
+      padding: 2px;
+      box-shadow: 0 0 18px rgba(96, 165, 250, 0.7);
+    }
+
+    .logo-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.07em;
+      color: #e5e7eb;
+    }
+
+    .logo-text-main {
+      font-weight: 600;
+      font-size: 17px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .logo-text-sub {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      padding: 4px 6px;
+      border-radius: 999px;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #e5e7eb;
+      background: rgba(148, 163, 184, 0.16);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 0 0, rgba(244, 244, 245, 0.06), transparent 60%), #4f46e5;
+      color: #f9fafb;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid rgba(191, 219, 254, 0.3);
+      box-shadow: 0 12px 30px rgba(79, 70, 229, 0.55);
+      cursor: pointer;
+    }
+
+    .nav-cta span.icon {
+      font-size: 15px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    /* Hero */
+
+    .hero {
+      padding: 40px 0 80px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+        padding-top: 16px;
+      }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 12px;
+    }
+
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
+    }
+
+    .badge-highlight {
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(79, 70, 229, 0.13);
+      color: #e5e7eb;
+      font-size: 10px;
+      border: 1px solid rgba(129, 140, 248, 0.7);
+    }
+
+    .hero-title {
+      font-size: clamp(34px, 5vw, 44px);
+      line-height: 1.18;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .hero-title span.accent {
+      background: linear-gradient(135deg, #4f46e5, #22c55e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 550px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .hero-highlights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .pill {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 4px 9px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: var(--muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(79, 70, 229, 0.8);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 0 0, rgba(248, 250, 252, 0.08), transparent 55%), #4f46e5;
+      color: #f9fafb;
+      font-size: 14px;
+      font-weight: 500;
+      border: 1px solid rgba(191, 219, 254, 0.5);
+      box-shadow: 0 16px 36px rgba(79, 70, 229, 0.7);
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(79, 70, 229, 0.85);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.92);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.1s ease, border 0.1s ease, color 0.1s ease;
+    }
+
+    .btn-outline:hover {
+      background: rgba(15, 23, 42, 0.98);
+      color: #e5e7eb;
+      border-color: rgba(209, 213, 219, 0.9);
+    }
+
+    .hero-meta {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .hero-meta strong {
+      color: #e5e7eb;
+    }
+
+    .hero-right {
+      position: relative;
+    }
+
+    .hero-card {
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.45), transparent 55%), #020617;
+      border: 1px solid rgba(129, 140, 248, 0.5);
+      padding: 18px 18px 16px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.08;
+      background-image:
+        radial-gradient(circle at 20% 0, rgba(248, 250, 252, 0.35) 0, transparent 55%),
+        radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.4) 0, transparent 55%);
+      pointer-events: none;
+    }
+
+    .hero-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge-small {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--muted);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-small span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+    }
+
+    .hero-card-title {
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #e5e7eb;
+      margin: 0;
+    }
+
+    .hero-card-sub {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+    }
+
+    .hero-card-body {
+      position: relative;
+      z-index: 1;
+      border-radius: var(--radius-lg);
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      padding: 12px 12px 10px;
+      margin-bottom: 12px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .hero-card-body h4 {
+      margin: 0 0 4px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #e5e7eb;
+    }
+
+    .hero-card-steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .hero-step {
+      border-radius: 12px;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      padding: 8px;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .hero-step-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-bottom: 2px;
+    }
+
+    .hero-step-title {
+      font-size: 11px;
+      color: #e5e7eb;
+      font-weight: 500;
+      margin-bottom: 3px;
+    }
+
+    .hero-step-status {
+      font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-pill {
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(74, 222, 128, 0.7);
+      color: #bbf7d0;
+      background: rgba(22, 101, 52, 0.45);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .status-pill.danger {
+      border-color: rgba(248, 113, 113, 0.8);
+      color: #fecaca;
+      background: rgba(127, 29, 29, 0.55);
+    }
+
+    .hero-card-footer {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .hero-card-footer-left {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .hero-card-footer-left strong {
+      color: #e5e7eb;
+    }
+
+    .hero-card-footer-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(79, 70, 229, 0.7);
+      color: #c7d2fe;
+    }
+
+    .floating-tag {
+      position: absolute;
+      top: -12px;
+      right: 12px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(94, 234, 212, 0.8);
+      color: #a5f3fc;
+    }
+
+    .floating-chip {
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 10px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(156, 163, 175, 0.8);
+      color: var(--muted);
+    }
+
+    /* Sections */
+
+    section {
+      padding: 40px 0;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 540px;
+    }
+
+    .section-header {
+      margin-bottom: 18px;
+    }
+
+    /* Problem / Solution grid */
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .two-col {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      border-radius: var(--radius-xl);
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 16px 16px 14px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card h3 {
+      font-size: 16px;
+      margin: 0 0 6px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .chip span.box {
+      width: 8px;
+      height: 8px;
+      border-radius: 2px;
+      background: var(--accent);
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .list li {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+      align-items: flex-start;
+    }
+
+    .list li span.bullet {
+      margin-top: 4px;
+      font-size: 10px;
+      color: var(--accent-strong);
+    }
+
+    /* Pills row */
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 11px;
+    }
+
+    .pill-tag {
+      border-radius: 999px;
+      padding: 3px 8px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--muted);
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* How it works */
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .steps-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .step-card {
+      border-radius: var(--radius-lg);
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--border);
+      padding: 12px;
+      font-size: 13px;
+      color: var(--muted);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-index {
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #f3f4f6;
+      margin-bottom: 6px;
+      background: radial-gradient(circle at 30% 0, rgba(79, 70, 229, 0.3), transparent 70%);
+    }
+
+    .step-title {
+      font-size: 13px;
+      color: #e5e7eb;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .step-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    /* Architecture */
+
+    .arch-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .arch-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .arch-diagram {
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      background: radial-gradient(circle at 10% 0, rgba(56, 189, 248, 0.32), transparent 55%), #020617;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: var(--shadow-soft);
+      font-size: 12px;
+    }
+
+    .arch-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+      align-items: center;
+    }
+
+    .arch-box {
+      border-radius: 10px;
+      padding: 6px 9px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 11px;
+      color: #e5e7eb;
+      min-width: 110px;
+      text-align: center;
+    }
+
+    .arch-arrow {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .arch-note {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* Impact cards */
+
+    .impact-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .impact-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 550px) {
+      .impact-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .impact-card {
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid var(--border);
+      padding: 12px 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .impact-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .impact-value {
+      font-size: 18px;
+      font-weight: 600;
+      color: #e5e7eb;
+      margin-bottom: 4px;
+    }
+
+    /* Demo flow */
+
+    .demo-card {
+      border-radius: var(--radius-xl);
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid var(--border);
+      padding: 14px 14px 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .demo-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .demo-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .demo-step {
+      border-radius: 12px;
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+      padding: 8px;
+      font-size: 12px;
+    }
+
+    .demo-step strong {
+      display: block;
+      margin-bottom: 3px;
+      color: #e5e7eb;
+      font-size: 12px;
+    }
+
+    /* Team */
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .team-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 550px) {
+      .team-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .team-card {
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid var(--border);
+      padding: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .team-name {
+      font-size: 13px;
+      color: #e5e7eb;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .team-role {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .team-tag {
+      font-size: 10px;
+      border-radius: 999px;
+      padding: 2px 6px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    /* Footer */
+
+    .footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.3);
+      padding: 14px 0 20px;
+      font-size: 11px;
+      color: var(--muted);
+      text-align: center;
+      background: rgba(2, 6, 23, 0.98);
+      margin-top: 10px;
+    }
+
+    .footer span.accent {
+      color: #e5e7eb;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <div class="logo-wrap">
+        <div class="logo-mark">
+          <div class="logo-inner">
+            RR
+          </div>
+        </div>
+        <div>
+          <div class="logo-text-main">ReliefRail</div>
+          <div class="logo-text-sub">Aid. Traceable. Trusted.</div>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#problem">Problem</a>
+        <a href="#solution">Solution</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#impact">Impact</a>
+        <a href="#demo">Demo</a>
+        <a href="#team">Team</a>
+      </nav>
+
+      <button class="nav-cta" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">
+        <span class="icon">▶</span>
+        <span>View demo plan</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main>
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">
+            <span class="badge-dot"></span>
+            <span>Blockchain for disaster relief</span>
+            <span class="badge-highlight">Hackathon project</span>
+          </div>
+          <h1 class="hero-title">
+            Track every aid packet<br />
+            like a <span class="accent">Speed Post</span>.
+          </h1>
+          <p class="hero-subtitle">
+            ReliefRail is a blockchain-powered platform that turns every relief kit into a traceable digital identity.
+            Donors, NGOs and governments can follow each packet from warehouse to survivor, in real time.
+          </p>
+
+          <div class="hero-highlights">
+            <div class="pill">
+              <span class="pill-dot"></span>
+              Per-packet traceability
+            </div>
+            <div class="pill">
+              <span class="pill-dot"></span>
+              QR-based volunteer scans
+            </div>
+            <div class="pill">
+              <span class="pill-dot"></span>
+              Tamper-proof on-chain log
+            </div>
+          </div>
+
+          <div class="hero-cta-row">
+            <button class="btn-primary"
+                    onclick="document.getElementById('solution').scrollIntoView({behavior:'smooth'})">
+              Explore the solution
+              <span>↓</span>
+            </button>
+            <button class="btn-outline"
+                    onclick="document.getElementById('architecture').scrollIntoView({behavior:'smooth'})">
+              View tech architecture
+            </button>
+          </div>
+
+          <div class="hero-meta">
+            <strong>Built for ETH + sponsor stack</strong> · NGO-friendly · Works on low-end phones ·
+            Designed for real deployments in floods, earthquakes and pandemics.
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="hero-card">
+            <div class="floating-tag">Realtime relief map</div>
+            <div class="hero-card-header">
+              <div>
+                <div class="hero-card-title">Flood relief – Batch #WB-2025</div>
+                <div class="hero-card-sub">NGO control panel · Polygon testnet</div>
+              </div>
+              <div class="badge-small">
+                <span class="dot"></span>
+                Live tracking
+              </div>
+            </div>
+
+            <div class="hero-card-body">
+              <h4>Donor view – Your packets</h4>
+              <div>3 funded kits linked to your wallet.</div>
+              <div class="hero-card-steps">
+                <div class="hero-step">
+                  <div class="hero-step-label">Kit #102</div>
+                  <div class="hero-step-title">Food &amp; medicine</div>
+                  <div class="hero-step-status">
+                    <span class="status-pill">Delivered</span>
+                    <span>Tehsil C · 09:42</span>
+                  </div>
+                </div>
+                <div class="hero-step">
+                  <div class="hero-step-label">Kit #103</div>
+                  <div class="hero-step-title">Water &amp; hygiene</div>
+                  <div class="hero-step-status">
+                    <span class="status-pill">In transit</span>
+                    <span>Last scan: Depot B</span>
+                  </div>
+                </div>
+                <div class="hero-step">
+                  <div class="hero-step-label">Kit #104</div>
+                  <div class="hero-step-title">Dry ration</div>
+                  <div class="hero-step-status">
+                    <span class="status-pill danger">Pending</span>
+                    <span>Awaiting dispatch</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-card-footer">
+              <div class="hero-card-footer-left">
+                <div><strong>Visibility:</strong> 100% tracked, 0 unknown status</div>
+                <div>Every scan emits an on-chain event – no silent edits or deletions.</div>
+              </div>
+              <div class="hero-card-footer-right">
+                <span>⛓</span>
+                <span>On-chain audit ready</span>
+              </div>
+            </div>
+
+            <div class="floating-chip">
+              Donors · NGOs · Govt share the same source of truth.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Problem & Solution -->
+    <section id="problem">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Problem &amp; solution</div>
+        </div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="chip">
+              <span class="box"></span>
+              The problem
+            </div>
+            <h3>Disaster relief is often a black box.</h3>
+            <ul class="list">
+              <li>
+                <span class="bullet">•</span>
+                <span>Donors send money or materials, but rarely see where their help actually ends up.</span>
+              </li>
+              <li>
+                <span class="bullet">•</span>
+                <span>NGOs juggle spreadsheets, WhatsApp groups and manual logs – easy to lose track.</span>
+              </li>
+              <li>
+                <span class="bullet">•</span>
+                <span>Relief kits can be delayed, duplicated or even diverted before reaching survivors.</span>
+              </li>
+              <li>
+                <span class="bullet">•</span>
+                <span>Governments struggle to audit who received what, and which regions are under-served.</span>
+              </li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill-tag">Opaque flows</span>
+              <span class="pill-tag">Low trust</span>
+              <span class="pill-tag">Inefficient allocation</span>
+            </div>
+          </div>
+
+          <div class="card" id="solution">
+            <div class="chip">
+              <span class="box"></span>
+              Our solution
+            </div>
+            <h3>ReliefRail – per-packet, on-chain visibility.</h3>
+            <ul class="list">
+              <li>
+                <span class="bullet">✔</span>
+                <span>Every physical kit gets a unique digital identity (ID / token) on a blockchain.</span>
+              </li>
+              <li>
+                <span class="bullet">✔</span>
+                <span>Volunteers scan QR codes at each checkpoint to update status: packed, in transit, delivered.</span>
+              </li>
+              <li>
+                <span class="bullet">✔</span>
+                <span>All status changes are stored as immutable on-chain events – no silent edits.</span>
+              </li>
+              <li>
+                <span class="bullet">✔</span>
+                <span>Donors see the journey of kits they funded; NGOs and authorities see a live distribution map.</span>
+              </li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill-tag">Per-kit tracking</span>
+              <span class="pill-tag">Shared source of truth</span>
+              <span class="pill-tag">Audit-ready logs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how-it-works">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Flow</div>
+          <h2 class="section-title">How ReliefRail works, step by step.</h2>
+          <p class="section-subtitle">
+            A simple 5-stage flow that matches real-world disaster operations but adds transparent, decentralized tracking.
+          </p>
+        </div>
+
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-index">1</div>
+            <div class="step-tag">NGO admin</div>
+            <div class="step-title">Create batch &amp; mint kits</div>
+            <p>
+              The NGO creates a relief batch (e.g., “Odisha floods”) and specifies the number of kits, contents and target region.
+              Each kit gets a unique on-chain ID.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-index">2</div>
+            <div class="step-tag">System</div>
+            <div class="step-title">Generate &amp; stick QR codes</div>
+            <p>
+              ReliefRail generates QR labels linked to each kit ID. These are printed and stuck on physical packets at the warehouse.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-index">3</div>
+            <div class="step-tag">Volunteers</div>
+            <div class="step-title">Scan at every checkpoint</div>
+            <p>
+              At each hand-off (warehouse, truck, local depot, field), volunteers scan QR codes using a mobile-friendly web app and
+              update status + location.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-index">4</div>
+            <div class="step-tag">Blockchain</div>
+            <div class="step-title">Write immutable status events</div>
+            <p>
+              Every status change emits an event on an EVM chain (e.g., Polygon). Logs cannot be silently modified or deleted later.
+            </p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-index">5</div>
+            <div class="step-tag">Dashboards</div>
+            <div class="step-title">Donor &amp; NGO insights</div>
+            <p>
+              Donors see the journey of their funded kits, NGOs see bottlenecks and coverage, and auditors get end-to-end traceability.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Architecture -->
+    <section id="architecture">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Architecture</div>
+          <h2 class="section-title">Technical overview &amp; stack.</h2>
+          <p class="section-subtitle">
+            Clean separation of concerns: friendly web UIs, a robust backend, and an EVM-based smart contract layer that
+            anchors all critical events.
+          </p>
+        </div>
+
+        <div class="arch-grid">
+          <div class="arch-diagram">
+            <div class="arch-row">
+              <div class="arch-box">Donor web app</div>
+              <span class="arch-arrow">⟷</span>
+              <div class="arch-box">Backend API</div>
+            </div>
+            <div class="arch-row">
+              <div class="arch-box">NGO dashboard</div>
+              <span class="arch-arrow">⟷</span>
+              <div class="arch-box">Backend API</div>
+            </div>
+            <div class="arch-row">
+              <div class="arch-box">Volunteer scanner</div>
+              <span class="arch-arrow">⟷</span>
+              <div class="arch-box">Backend API</div>
+            </div>
+            <div class="arch-row">
+              <div class="arch-box">Backend API</div>
+              <span class="arch-arrow">⟷</span>
+              <div class="arch-box">EVM smart contracts</div>
+              <span class="arch-arrow">⟷</span>
+              <div class="arch-box">Explorer / infra</div>
+            </div>
+            <div class="arch-row">
+              <div class="arch-box">Database (off-chain)</div>
+              <span class="arch-arrow">⟷</span>
+              <div class="arch-box">Maps &amp; QR services</div>
+            </div>
+            <div class="arch-note">
+              Typical stack: Next.js + Tailwind (frontend), Node/Express + MongoDB (backend), Solidity contracts on Polygon/Ethereum,
+              with sponsor APIs used for deployment, wallet abstraction and NFT/asset data.
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="chip">
+              <span class="box"></span>
+              Key modules
+            </div>
+            <h3>Core components we plan to implement.</h3>
+            <ul class="list">
+              <li>
+                <span class="bullet">•</span>
+                <span><strong>ReliefRailRegistry.sol</strong> – stores kit metadata and emits status update events.</span>
+              </li>
+              <li>
+                <span class="bullet">•</span>
+                <span><strong>REST backend</strong> – handles role-based actions, talks to contracts via ethers.js / sponsor SDKs.</span>
+              </li>
+              <li>
+                <span class="bullet">•</span>
+                <span><strong>NGO admin UI</strong> – create batches, mint kits, download QR sheets, monitor deliveries.</span>
+              </li>
+              <li>
+                <span class="bullet">•</span>
+                <span><strong>Volunteer scanner UI</strong> – lightweight mobile web app for scanning QRs and pushing status + location.</span>
+              </li>
+              <li>
+                <span class="bullet">•</span>
+                <span><strong>Donor dashboard</strong> – list of funded kits, with their latest status and location pins on a map.</span>
+              </li>
+            </ul>
+            <div class="pill-row">
+              <span class="pill-tag">Solidity · Hardhat</span>
+              <span class="pill-tag">Node.js · Express</span>
+              <span class="pill-tag">Next.js · Tailwind</span>
+              <span class="pill-tag">MongoDB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact -->
+    <section id="impact">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Impact</div>
+          <h2 class="section-title">What changes when ReliefRail is deployed?</h2>
+          <p class="section-subtitle">
+            It’s not just a dashboard. It’s a way to make every rupee and every kit accountable, measurable and
+            impossible to quietly “lose”.
+          </p>
+        </div>
+
+        <div class="impact-grid">
+          <div class="impact-card">
+            <div class="impact-label">Transparency</div>
+            <div class="impact-value">100%</div>
+            <div>Every kit has a visible journey, from mint to delivery, anchored on-chain.</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-label">Leakage reduction</div>
+            <div class="impact-value">↓ Unknowns</div>
+            <div>Packets with “unknown status” are flagged early, forcing correction before it’s too late.</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-label">Donor trust</div>
+            <div class="impact-value">↑ Repeat</div>
+            <div>Clear impact visualizations and proof of delivery translate into more repeat donors.</div>
+          </div>
+          <div class="impact-card">
+            <div class="impact-label">Policy insight</div>
+            <div class="impact-value">Data-driven</div>
+            <div>Authorities can see which regions got how many kits, across NGOs, in one shared view.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Demo plan -->
+    <section id="demo">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Demo flow</div>
+          <h2 class="section-title">How we’ll present ReliefRail to judges.</h2>
+          <p class="section-subtitle">
+            A crisp 3–5 minute walkthrough that connects the human story with the technical execution.
+          </p>
+        </div>
+
+        <div class="demo-card">
+          <div class="demo-row">
+            <div class="demo-step">
+              <strong>1. Scenario setup</strong>
+              A flood hits a district. An NGO wants to send 100 relief kits, funded by online donors.
+            </div>
+            <div class="demo-step">
+              <strong>2. NGO dashboard</strong>
+              Show batch creation, minting of kits and generation of QR codes for printing.
+            </div>
+            <div class="demo-step">
+              <strong>3. Volunteer scan</strong>
+              Simulate scanning a kit and updating it from “Packed” → “In transit” → “Delivered”.
+            </div>
+            <div class="demo-step">
+              <strong>4. Donor view</strong>
+              Switch to donor dashboard, show 2 kits delivered, 1 kit in transit, plus a simple map.
+            </div>
+            <div class="demo-step">
+              <strong>5. On-chain proof</strong>
+              Show a transaction / event log in a block explorer, reinforcing that no log entries can be quietly edited.
+            </div>
+          </div>
+          <p style="margin-top:10px;font-size:12px;color:var(--muted);">
+            Closing line: “ReliefRail makes disaster aid as trackable as an online order – but with lives on the other end.”
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section id="team">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Team</div>
+          <h2 class="section-title">Team ReliefRail.</h2>
+          <p class="section-subtitle">
+            Replace these placeholders with your real names and roles before the hackathon.
+          </p>
+        </div>
+
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-name">Member 1</div>
+            <div class="team-role">Blockchain &amp; smart contracts</div>
+            <div>Designs the on-chain kit registry, events and integration with sponsor infra.</div>
+            <div class="team-tag">Solidity · Hardhat</div>
+          </div>
+          <div class="team-card">
+            <div class="team-name">Member 2</div>
+            <div class="team-role">Backend &amp; APIs</div>
+            <div>Owns the REST backend, security, QR flows and contract calls.</div>
+            <div class="team-tag">Node.js · Express</div>
+          </div>
+          <div class="team-card">
+            <div class="team-name">Member 3</div>
+            <div class="team-role">Web dashboards</div>
+            <div>Builds NGO and donor dashboards, maps and UX polish.</div>
+            <div class="team-tag">Next.js · UI/UX</div>
+          </div>
+          <div class="team-card">
+            <div class="team-name">Member 4</div>
+            <div class="team-role">Volunteer app &amp; testing</div>
+            <div>Focuses on scanner experience, mobile testing and demo scripting.</div>
+            <div class="team-tag">Mobile · QA</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div>
+        <span class="accent">ReliefRail</span> · Transparent disaster relief tracking on blockchain.
+        Built as a hackathon project; ready to be piloted in real-world scenarios.
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Small helper: smooth scroll for older browsers on nav links
+  document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+    anchor.addEventListener("click", function (e) {
+      const targetId = this.getAttribute("href").slice(1);
+      const target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  });
+</script>
+</body>
+</html>
