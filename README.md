@@ -173,11 +173,3 @@ Example concept for `ReliefRouteRegistry`:
   - `event StatusUpdated(uint256 indexed kitId, KitStatus newStatus, string locationTag, uint256 timestamp);`
 
 ---
-
-## 🚀 Getting Started (High-Level)
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/Projects-098765/ReliefRoute.git
-cd ReliefRoute
